@@ -15,7 +15,7 @@ import torch
 load_dotenv()
 API_KEY = os.getenv('OPENAI_API_KEY')
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
-embeddings = OpenAIEmbeddings()
+embeddings2 = OpenAIEmbeddings()
 
 
 def create_vector_db_from_youtube_url(video_url: str)-> FAISS:
@@ -25,7 +25,7 @@ def create_vector_db_from_youtube_url(video_url: str)-> FAISS:
     text_splitter = RecursiveCharacterTextSplitter(chunk_size = 1000, chunk_overlap = 100)
     docs = text_splitter.split_documents(transcript)
 
-    db = FAISS.from_documents(docs,embeddings)
+    db = FAISS.from_documents(docs,embeddings2)
     return db
 
 def get_response_from_query(db, query, k=4):
