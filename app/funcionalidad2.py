@@ -1,5 +1,3 @@
-from transformers import MarianMTModel, MarianTokenizer
-from transformers import pipeline
 from langchain.document_loaders import YoutubeLoader
 from langchain.chains import LLMChain
 from langchain.llms import OpenAI as openai
