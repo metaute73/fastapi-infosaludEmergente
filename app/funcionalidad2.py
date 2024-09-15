@@ -13,27 +13,12 @@ from langchain.vectorstores import FAISS
 from dotenv import load_dotenv
 import os
 import torch
-os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
+
 load_dotenv()
 API_KEY = os.getenv('OPENAI_API_KEY')
 
-#pipe = pipeline("translation", model="Helsinki-NLP/opus-mt-tc-big-en-es")
-model_name = "Helsinki-NLP/opus-mt-tc-big-en-es"
-tokenizer = MarianTokenizer.from_pretrained(model_name)
-model = MarianMTModel.from_pretrained(model_name)
 embeddings = OpenAIEmbeddings()
 
-def translate(text):
-    # Tokenize input text
-    inputs = tokenizer(text, return_tensors="pt", padding=True)
-
-    # Perform translation
-    with torch.no_grad():
-        translated = model.generate(**inputs)
-    
-    # Decode the translated text
-    translated_text = tokenizer.decode(translated[0], skip_special_tokens=True)
-    return translated_text
 
 def create_vector_db_from_youtube_url(video_url: str)-> FAISS:
     loader = YoutubeLoader.from_youtube_url(video_url)
@@ -55,18 +40,17 @@ def get_response_from_query(db, query, k=4):
         input_variables=["question", "docs"],
         template= """
 
-          you are a helpful youtube assistant that can answer questions about videos based on the
-          video's transcript.
+          Eres un asistente inteligente de videos en Youtube
 
-          Answer the following question: {question}
-          By searching the following video transcript: {docs}
+          Responde la siguiente pregunta: {question}
+          Buscando en el siguiente guion de youtube: {docs}
 
-          Only use the factual information from the transcript to answer the question set
+          Solo responde la pregunta ayudandote del guion de youtube.
 
-          If you feel like you don't have enough information to answer the question, say "I don't know".ImportError
-          Do not use any other information to answer the question.
-          Answer in english
-          Your answers should be datailed.
+          Si crees no tener suficiente información para responder la pregunta, responde "No tengo suficiente información para responder la pregunta"
+          No utilices otra información para responder la pregunta
+          Responde en español
+          Tu respuesta debería estar detallada.
         """
     )
     chain = LLMChain(llm=llm, prompt = prompt)
@@ -106,6 +90,6 @@ def usar_infoSE_2(video, pregunta):
 
   db = create_vector_db_from_youtube_url(url)
   response = get_response_from_query(db, pregunta)
-  return translate(response)
+  return response
 
-print(usar_infoSE_2(1, '¿what is the video about?'))
+#print(usar_infoSE_2(1, '¿what is the video about?'))
