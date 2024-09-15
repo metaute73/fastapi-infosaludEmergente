@@ -2,7 +2,7 @@
 from fastapi import FastAPI, HTTPException
 from app.funcionalidad1 import usar_infoSE
 from app.funcionalidad2 import usar_infoSE_2
-from app.funcionalidad3 import funcionalidad3
+from app.funcionalidad3 import usar_infoSE3, Model
 from pydantic import BaseModel
 from typing import List
 
@@ -30,5 +30,5 @@ async def process_double(params: DoubleParamsModel):
 
 @app.post("/process_list")
 async def process_list(params: ListParamModel):
-    result = funcionalidad3(params.params)
+    result = usar_infoSE3(params.params)
     return {"result": result}
