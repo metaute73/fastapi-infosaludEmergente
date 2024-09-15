@@ -1,8 +1,8 @@
 
 from fastapi import FastAPI, HTTPException
 from app.funcionalidad1 import usar_infoSE
-from app.funcionalidad2 import usar_infoSE_2
-from app.funcionalidad3 import usar_infoSE3, Model
+from funcionalidad2 import usar_infoSE_2
+from funcionalidad3 import usar_infoSE3, Model
 from pydantic import BaseModel
 from typing import List
 
