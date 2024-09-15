@@ -9,11 +9,11 @@ from typing import List
 app = FastAPI()
 
 class SingleParamModel(BaseModel):
-    param: int
+    param: str
 
 class DoubleParamsModel(BaseModel):
     param1: int
-    param2: int
+    param2: str
 
 class ListParamModel(BaseModel):
     params: List[int]
