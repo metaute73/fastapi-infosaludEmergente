@@ -2,11 +2,37 @@
 from fastapi import FastAPI, HTTPException
 from app.funcionalidad1 import usar_infoSE
 from app.funcionalidad2 import usar_infoSE_2
-from app.funcionalidad3 import usar_infoSE3, Model
+#from app.funcionalidad3 import usar_infoSE3, Model
 from pydantic import BaseModel
 from typing import List
+import pickle
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
 app = FastAPI()
+class Model(nn.Module):
+    def __init__(self, in_features=9, h1=24, h2=32, out_features=2):
+        super().__init__()
+        self.fc1 = nn.Linear(in_features, h1)
+        self.fc2 = nn.Linear(h1, h2)
+        self.out = nn.Linear(h2, out_features)
+
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.out(x)
+        return x
+
+def usar_infoSE3(respuestas_usuario):
+    
+    with open('model_entire.pickle', 'rb') as f:
+        loaded_model = pickle.load(f)
+  
+    if loaded_model.forward(torch.FloatTensor(respuestas_usuario)).argmax().item() == 0:
+        return "Por ahora no pareces estar en riesgo"
+    return "Podrías estar en riesgo, te recomendamos realizarte una prueba de VIH lo más pronto posible"
+
 
 class SingleParamModel(BaseModel):
     param: str
