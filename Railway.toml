@@ -1,0 +1,14 @@
+# Railway.toml for FastAPI
+[project]
+name = "fastapi-infosaludEmergente"
+
+[build]
+build_command = "pip install -r requirements.txt"
+start_command = "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+[env]
+DATABASE_URL = "{{PostgreSQL.DATABASE_URL}}"
+
+[ports]
+internal = 8000
+external = 80
