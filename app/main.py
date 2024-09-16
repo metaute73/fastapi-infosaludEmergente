@@ -11,7 +11,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 app = FastAPI()
-class Model(nn.Module):
+class Prediction(nn.Module):
     def __init__(self, in_features=9, h1=24, h2=32, out_features=2):
         super().__init__()
         self.fc1 = nn.Linear(in_features, h1)
