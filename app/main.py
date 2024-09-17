@@ -27,7 +27,7 @@ class Prediction(nn.Module):
 def usar_infoSE3(respuestas_usuario):
     
     modelito = Prediction()
-    modelito = torch.load('model.pth')
+    modelito = torch.load('model_weights.pth')
     if modelito.forward(torch.FloatTensor(respuestas_usuario)).argmax().item() == 0:
         return 'Por ahora no pareces estar en riesgo'
     return 'Podrías estar en riesgo, te recomendamos realizarte una prueba de VIH lo más pronto posible'
