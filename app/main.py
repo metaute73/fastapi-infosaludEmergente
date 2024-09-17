@@ -26,13 +26,12 @@ class Prediction(nn.Module):
 
 def usar_infoSE3(respuestas_usuario):
     
-    with open('model_entire.pickle', 'rb') as f:
-        loaded_model = pickle.load(f)
+    modelito = Prediction()
+    modelito = torch.load('model.pth')
+    if modelito.forward(torch.FloatTensor(respuestas_usuario)).argmax().item() == 0:
+        return 'Por ahora no pareces estar en riesgo'
+    return 'Podrías estar en riesgo, te recomendamos realizarte una prueba de VIH lo más pronto posible'
   
-    if loaded_model.forward(torch.FloatTensor(respuestas_usuario)).argmax().item() == 0:
-        return "Por ahora no pareces estar en riesgo"
-    return "Podrías estar en riesgo, te recomendamos realizarte una prueba de VIH lo más pronto posible"
-
 
 class SingleParamModel(BaseModel):
     param: str
@@ -58,3 +57,5 @@ async def process_double(params: DoubleParamsModel):
 async def process_list(params: ListParamModel):
     result = usar_infoSE3(params.params)
     return {"result": result}
+
+        
