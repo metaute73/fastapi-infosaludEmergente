@@ -9,8 +9,23 @@ import pickle
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5137",  # Allow localhost:5137
+]
+
+# Add the CORSMiddleware to the FastAPI app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,           # Specify allowed origins
+    allow_credentials=True,          # Allow cookies and credentials
+    allow_methods=["*"],             # Allow all HTTP methods
+    allow_headers=["*"],             # Allow all headers
+)
+
 class Prediction(nn.Module):
     def __init__(self, in_features=9, h1=24, h2=32, out_features=2):
         super().__init__()
