@@ -14,7 +14,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:5137",  # Allow localhost:5137
+    "http://localhost:5173", 
+    "https://infosalud-production.up.railway.app/" # Allow localhost:5137
 ]
 
 # Add the CORSMiddleware to the FastAPI app
