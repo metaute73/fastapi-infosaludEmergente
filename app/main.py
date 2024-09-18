@@ -15,7 +15,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173", 
-    "https://infosalud-production.up.railway.app/" # Allow localhost:5137
+    "https://infosalud-production.up.railway.app" # Allow localhost:5137
 ]
 
 # Add the CORSMiddleware to the FastAPI app
